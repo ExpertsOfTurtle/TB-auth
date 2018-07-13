@@ -67,6 +67,7 @@ public class WechatLoginController {
 			userDetails.setTokenType("WX");
 			userDetails.setLoginName(getUsername(openId));
 			
+			logger.debug("UserDetails回：{}", JSON.toJSONString(userDetails));
 			//把openId存放到redis中，维持30分钟
 			redisService.set(openId, JSON.toJSONString(userDetails));
 			redisService.expire(openId, 60 * 30);
