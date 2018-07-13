@@ -44,7 +44,7 @@ public class WechatLoginController {
 	
 	@RequestMapping(value="/getOpenId", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> getOpenId(@RequestBody WechatLoginRequest request) {
-		logger.info("getOpenId:{}");
+		logger.info("getOpenId:{}", JSON.toJSONString(request));
 	
 		String code = request.getCode();
 		String url = String.format("%s?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code", 
@@ -55,6 +55,8 @@ public class WechatLoginController {
 		try {
 			RestTemplate template = new RestTemplate();
 			result = template.getForObject(url, String.class);
+			
+			logger.debug("微信返回：{}", result);
 //			result = SendHTTPUtil.callApiServer(url, "GET", "", null);
 			JSONObject rs = JSON.parseObject(result);
 			String openId = rs.getString("openid");
@@ -70,6 +72,7 @@ public class WechatLoginController {
 			redisService.expire(openId, 60 * 30);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			logger.error("getOpenId失败了：{}", e.getMessage());
 			e.printStackTrace();
 		}
 		return ResponseEntity.ok(userDetails);
