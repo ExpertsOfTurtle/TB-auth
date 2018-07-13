@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.auth.repository.TokenRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.auth.entity.Token" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tokenId" property="tokenid" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="expiryTime" property="expirytime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `tokenId`,
+   `username`,
+   `expiryTime`,
+   `createTime`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from token
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from token
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.auth.entity.Token" >
+    insert into token ( 
+     `id`,
+     `tokenId`,
+     `username`,
+     `expiryTime`,
+     `createTime`
+    )
+    values (
+     #{id,jdbcType=INTEGER},
+     #{tokenid,jdbcType=VARCHAR},
+     #{username,jdbcType=VARCHAR},
+     #{expirytime,jdbcType=TIMESTAMP},
+     #{createtime,jdbcType=TIMESTAMP}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.auth.entity.Token" >
+    insert into token
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="tokenid != null" >
+        `tokenId`,
+      </if>
+      <if test="username != null" >
+        `username`,
+      </if>
+      <if test="expirytime != null" >
+        `expiryTime`,
+      </if>
+      <if test="createtime != null" >
+        `createTime`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tokenid != null" >
+        #{tokenid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="expirytime != null" >
+        #{expirytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.auth.entity.Token" >
+    update token
+	  <set>
+       <if test="tokenid != null" >
+        `tokenId`= #{tokenid,jdbcType=VARCHAR},
+       </if>
+       <if test="username != null" >
+        `username`= #{username,jdbcType=VARCHAR},
+       </if>
+       <if test="expirytime != null" >
+        `expiryTime`= #{expirytime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="createtime != null" >
+        `createTime`= #{createtime,jdbcType=TIMESTAMP},
+       </if>
+          </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.auth.entity.Token" >
+    update token
+    set 
+       `tokenId` = #{tokenid,jdbcType=VARCHAR},
+       `username` = #{username,jdbcType=VARCHAR},
+       `expiryTime` = #{expirytime,jdbcType=TIMESTAMP},
+       `createTime` = #{createtime,jdbcType=TIMESTAMP}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.auth.entity.Token" >
+    select count(*) from token
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="tokenid != null" >
+        and `tokenId` = #{tokenid,jdbcType=VARCHAR}
+      </if>
+            <if test="username != null" >
+        and `username` = #{username,jdbcType=VARCHAR}
+      </if>
+            <if test="expirytime != null" >
+        and `expiryTime` = #{expirytime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="createtime != null" >
+        and `createTime` = #{createtime,jdbcType=TIMESTAMP}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from token where 1 = 1 
+        <if test="token.id != null" >
+      and `id` = #{token.id,jdbcType=INTEGER}
+    </if>
+        <if test="token.tokenid != null" >
+      and `tokenId` = #{token.tokenid,jdbcType=VARCHAR}
+    </if>
+        <if test="token.username != null" >
+      and `username` = #{token.username,jdbcType=VARCHAR}
+    </if>
+        <if test="token.expirytime != null" >
+      and `expiryTime` = #{token.expirytime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="token.createtime != null" >
+      and `createTime` = #{token.createtime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'tokenId'
+   || order.property == 'username'
+   || order.property == 'expiryTime'
+   || order.property == 'createTime'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  
+  <select id="selectByTokenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from token
+    where tokenId = #{tokenId,jdbcType=VARCHAR}
+  </select>
+ </mapper>
+  
+
+  
+	

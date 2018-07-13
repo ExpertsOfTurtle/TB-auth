@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.auth.repository.UserRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.auth.entity.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="REAL" />
+    <result column="usertype" property="usertype" jdbcType="INTEGER" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `login_name`,
+   `login_pwd`,
+   `createtime`,
+   `balance`,
+   `usertype`,
+   `openid`,
+   `nickname`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.auth.entity.User" >
+    insert into user ( 
+     `id`,
+     `login_name`,
+     `login_pwd`,
+     `createtime`,
+     `balance`,
+     `usertype`,
+     `openid`,
+     `nickname`
+    )
+    values (
+     #{id,jdbcType=INTEGER},
+     #{loginName,jdbcType=VARCHAR},
+     #{loginPwd,jdbcType=VARCHAR},
+     #{createtime,jdbcType=VARCHAR},
+     #{balance,jdbcType=REAL},
+     #{usertype,jdbcType=INTEGER},
+     #{openid,jdbcType=VARCHAR},
+     #{nickname,jdbcType=LONGVARCHAR}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.auth.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="loginName != null" >
+        `login_name`,
+      </if>
+      <if test="loginPwd != null" >
+        `login_pwd`,
+      </if>
+      <if test="createtime != null" >
+        `createtime`,
+      </if>
+      <if test="balance != null" >
+        `balance`,
+      </if>
+      <if test="usertype != null" >
+        `usertype`,
+      </if>
+      <if test="openid != null" >
+        `openid`,
+      </if>
+      <if test="nickname != null" >
+        `nickname`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null" >
+        #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=REAL},
+      </if>
+      <if test="usertype != null" >
+        #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.auth.entity.User" >
+    update user
+	  <set>
+       <if test="loginPwd != null" >
+        `login_pwd`= #{loginPwd,jdbcType=VARCHAR},
+       </if>
+       <if test="createtime != null" >
+        `createtime`= #{createtime,jdbcType=VARCHAR},
+       </if>
+       <if test="balance != null" >
+        `balance`= #{balance,jdbcType=REAL},
+       </if>
+       <if test="usertype != null" >
+        `usertype`= #{usertype,jdbcType=INTEGER},
+       </if>
+       <if test="openid != null" >
+        `openid`= #{openid,jdbcType=VARCHAR},
+       </if>
+           <if test="nickname != null" >
+        `nickname`= #{nickname,jdbcType=LONGVARCHAR},
+       </if>
+      </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.auth.entity.User" >
+    update user
+    set 
+   `nickname` = #{nickname,jdbcType=LONGVARCHAR},
+       `login_pwd` = #{loginPwd,jdbcType=VARCHAR},
+       `createtime` = #{createtime,jdbcType=VARCHAR},
+       `balance` = #{balance,jdbcType=REAL},
+       `usertype` = #{usertype,jdbcType=INTEGER},
+       `openid` = #{openid,jdbcType=VARCHAR}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.auth.entity.User" >
+    select count(*) from user
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="loginName != null" >
+        and `login_name` = #{loginName,jdbcType=VARCHAR}
+      </if>
+            <if test="loginPwd != null" >
+        and `login_pwd` = #{loginPwd,jdbcType=VARCHAR}
+      </if>
+            <if test="createtime != null" >
+        and `createtime` = #{createtime,jdbcType=VARCHAR}
+      </if>
+            <if test="balance != null" >
+        and `balance` = #{balance,jdbcType=REAL}
+      </if>
+            <if test="usertype != null" >
+        and `usertype` = #{usertype,jdbcType=INTEGER}
+      </if>
+            <if test="openid != null" >
+        and `openid` = #{openid,jdbcType=VARCHAR}
+      </if>
+            <if test="nickname != null" >
+        and `nickname` = #{nickname,jdbcType=LONGVARCHAR}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from user where 1 = 1 
+        <if test="user.id != null" >
+      and `id` = #{user.id,jdbcType=INTEGER}
+    </if>
+        <if test="user.loginName != null" >
+      and `login_name` = #{user.loginName,jdbcType=VARCHAR}
+    </if>
+        <if test="user.loginPwd != null" >
+      and `login_pwd` = #{user.loginPwd,jdbcType=VARCHAR}
+    </if>
+        <if test="user.createtime != null" >
+      and `createtime` = #{user.createtime,jdbcType=VARCHAR}
+    </if>
+        <if test="user.balance != null" >
+      and `balance` = #{user.balance,jdbcType=REAL}
+    </if>
+        <if test="user.usertype != null" >
+      and `usertype` = #{user.usertype,jdbcType=INTEGER}
+    </if>
+        <if test="user.openid != null" >
+      and `openid` = #{user.openid,jdbcType=VARCHAR}
+    </if>
+        <if test="user.nickname != null" >
+      and `nickname` = #{user.nickname,jdbcType=LONGVARCHAR}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'login_name'
+   || order.property == 'login_pwd'
+   || order.property == 'createtime'
+   || order.property == 'balance'
+   || order.property == 'usertype'
+   || order.property == 'openid'
+   || order.property == 'nickname'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from turtle.user
+    where login_name = #{username,jdbcType=VARCHAR}
+    limit 1
+  </select>
+  <select id="listAllUser" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from turtle.user
+  </select>
+  <select id="selectByUserList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from turtle.user
+    where login_name in (
+    <foreach collection ="list" item="item" index= "index" separator ="," >
+    	#{item,jdbcType=VARCHAR}
+    </foreach>)
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from turtle.user where 1=1
+    <if test="openid != null" >
+      and `openid` = #{openid,jdbcType=VARCHAR}
+    </if>
+    <if test="loginName != null" >
+      and `login_name` = #{loginName,jdbcType=VARCHAR}
+    </if>
+    limit 1
+  </select>
+ </mapper>
+  
+
+  
+	

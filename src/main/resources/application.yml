@@ -1,0 +1,58 @@
+spring:
+  profiles: default
+  datasource:
+    type: org.apache.commons.dbcp2.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/auth?allowMultiQueries=true
+    username: mysql
+    password: mysql
+    initialSize: 10
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    testWhileIdle: true
+    validationQuery: select 'x'
+  velocity:
+    charset: UTF-8
+    properties.input.encoding: UTF-8
+    properties.output.encoding: UTF-8 
+    resourceLoaderPath: classpath:templates/
+    suffix: .vm 
+  jmx.default-domain: auth.turtlebone
+server:
+  port: 12004
+  contextPath: /auth/
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+constants:
+  excludeRegex: auth
+---
+spring:
+  profiles: prod
+  datasource:
+    type: org.apache.commons.dbcp2.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://www.turtlebone.top:3306/auth?allowMultiQueries=true
+    username: mysql
+    password: mysql
+    initialSize: 10
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    testWhileIdle: true
+    validationQuery: select 'x'
+  velocity:
+    charset: UTF-8
+    properties.input.encoding: UTF-8
+    properties.output.encoding: UTF-8 
+    resourceLoaderPath: classpath:templates/
+    suffix: .vm
+  jmx.default-domain: auth.turtlebone
+server:
+  port: 12004
+  contextPath: /auth/
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+redis.expireTime: 3600
+constants:
+  excludeRegex: auth

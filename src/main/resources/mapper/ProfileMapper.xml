@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.auth.repository.ProfileRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.auth.entity.Profile" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="active" property="active" jdbcType="INTEGER" />
+    <result column="lastLogonTime" property="lastlogontime" jdbcType="TIMESTAMP" />
+    <result column="lastLogonIP" property="lastlogonip" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `username`,
+   `status`,
+   `active`,
+   `lastLogonTime`,
+   `lastLogonIP`,
+   `password`,
+   `email`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from profile
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from profile
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.auth.entity.Profile" >
+    insert into profile ( 
+     `id`,
+     `username`,
+     `status`,
+     `active`,
+     `lastLogonTime`,
+     `lastLogonIP`,
+     `password`,
+     `email`
+    )
+    values (
+     #{id,jdbcType=INTEGER},
+     #{username,jdbcType=VARCHAR},
+     #{status,jdbcType=INTEGER},
+     #{active,jdbcType=INTEGER},
+     #{lastlogontime,jdbcType=TIMESTAMP},
+     #{lastlogonip,jdbcType=VARCHAR},
+     #{password,jdbcType=VARCHAR},
+     #{email,jdbcType=VARCHAR}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.auth.entity.Profile" >
+    insert into profile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="username != null" >
+        `username`,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="active != null" >
+        `active`,
+      </if>
+      <if test="lastlogontime != null" >
+        `lastLogonTime`,
+      </if>
+      <if test="lastlogonip != null" >
+        `lastLogonIP`,
+      </if>
+      <if test="password != null" >
+        `password`,
+      </if>
+      <if test="email != null" >
+        `email`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="active != null" >
+        #{active,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogontime != null" >
+        #{lastlogontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastlogonip != null" >
+        #{lastlogonip,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.auth.entity.Profile" >
+    update profile
+	  <set>
+       <if test="username != null" >
+        `username`= #{username,jdbcType=VARCHAR},
+       </if>
+       <if test="status != null" >
+        `status`= #{status,jdbcType=INTEGER},
+       </if>
+       <if test="active != null" >
+        `active`= #{active,jdbcType=INTEGER},
+       </if>
+       <if test="lastlogontime != null" >
+        `lastLogonTime`= #{lastlogontime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="lastlogonip != null" >
+        `lastLogonIP`= #{lastlogonip,jdbcType=VARCHAR},
+       </if>
+       <if test="password != null" >
+        `password`= #{password,jdbcType=VARCHAR},
+       </if>
+       <if test="email != null" >
+        `email`= #{email,jdbcType=VARCHAR},
+       </if>
+          </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.auth.entity.Profile" >
+    update profile
+    set 
+       `username` = #{username,jdbcType=VARCHAR},
+       `status` = #{status,jdbcType=INTEGER},
+       `active` = #{active,jdbcType=INTEGER},
+       `lastLogonTime` = #{lastlogontime,jdbcType=TIMESTAMP},
+       `lastLogonIP` = #{lastlogonip,jdbcType=VARCHAR},
+       `password` = #{password,jdbcType=VARCHAR},
+       `email` = #{email,jdbcType=VARCHAR}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.auth.entity.Profile" >
+    select count(*) from profile
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="username != null" >
+        and `username` = #{username,jdbcType=VARCHAR}
+      </if>
+            <if test="status != null" >
+        and `status` = #{status,jdbcType=INTEGER}
+      </if>
+            <if test="active != null" >
+        and `active` = #{active,jdbcType=INTEGER}
+      </if>
+            <if test="lastlogontime != null" >
+        and `lastLogonTime` = #{lastlogontime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="lastlogonip != null" >
+        and `lastLogonIP` = #{lastlogonip,jdbcType=VARCHAR}
+      </if>
+            <if test="password != null" >
+        and `password` = #{password,jdbcType=VARCHAR}
+      </if>
+            <if test="email != null" >
+        and `email` = #{email,jdbcType=VARCHAR}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from profile where 1 = 1 
+        <if test="profile.id != null" >
+      and `id` = #{profile.id,jdbcType=INTEGER}
+    </if>
+        <if test="profile.username != null" >
+      and `username` = #{profile.username,jdbcType=VARCHAR}
+    </if>
+        <if test="profile.status != null" >
+      and `status` = #{profile.status,jdbcType=INTEGER}
+    </if>
+        <if test="profile.active != null" >
+      and `active` = #{profile.active,jdbcType=INTEGER}
+    </if>
+        <if test="profile.lastlogontime != null" >
+      and `lastLogonTime` = #{profile.lastlogontime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="profile.lastlogonip != null" >
+      and `lastLogonIP` = #{profile.lastlogonip,jdbcType=VARCHAR}
+    </if>
+        <if test="profile.password != null" >
+      and `password` = #{profile.password,jdbcType=VARCHAR}
+    </if>
+        <if test="profile.email != null" >
+      and `email` = #{profile.email,jdbcType=VARCHAR}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'username'
+   || order.property == 'status'
+   || order.property == 'active'
+   || order.property == 'lastLogonTime'
+   || order.property == 'lastLogonIP'
+   || order.property == 'password'
+   || order.property == 'email'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from profile
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+ </mapper>
+  
+
+  
+	

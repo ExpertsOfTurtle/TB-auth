@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+    </appender>
+    
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/apps/logs/turtlebone-auth/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/apps/logs/turtlebone-auth/application.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{80} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.mongodb" level="INFO"/>
+    <logger name="org.apache" level="ERROR"/>
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="ch.qos" level="ERROR"/>
+    <logger name="springfox.documentation" level="ERROR"/>
+    <logger name="org.mybatis" level="ERROR"/>
+    <logger name="org.jboss" level="ERROR"/>
+    <logger name="kafka" level="ERROR"/>
+    <logger name="org.I0Itec.zkclient" level="ERROR"/>
+    <logger name="org.jasig.cas" level="ERROR"/>
+    <logger name="com.alibaba" level="ERROR"/>
+    <logger name="org.neo4j" level="ERROR"/>
+    <logger name="ma.glasnost.orika" level="ERROR"/>
+
+    <logger name="com.turtle" level="DEBUG"/>
+
+    <root level="DEBUG">
+       <appender-ref ref="stdout"/>
+       <appender-ref ref="file"/>
+    </root>
+</configuration>
