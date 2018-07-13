@@ -59,7 +59,7 @@ spring:
     suffix: .vm
   redis:
     database: 0
-    host: 127.0.0.1
+    host: turtlebone.xyz
     port: 6379
     timeout: 0
     pool:
